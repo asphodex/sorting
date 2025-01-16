@@ -26,7 +26,7 @@ struct personName {
             return thisFirstThree < otherFirstThree;
         }
 
-        // Если первые три буквы совпадают, сравниваем полные строки в порядке: имя, фамилия, отчество
+        // recursive calls
         if (firstName != other.firstName) return firstName < other.firstName;
         if (lastName != other.lastName) return lastName < other.lastName;
         return middleName < other.middleName;
@@ -40,19 +40,16 @@ struct personName {
         return firstName == other.firstName && lastName == other.lastName && middleName == other.middleName;
     }
 
-    // Оператор "!" (проверка на пустоту)
     bool operator!() const {
         return firstName.empty() && lastName.empty() && middleName.empty();
     }
 
-    // Вывод в поток
     friend std::ostream& operator<<(std::ostream& os, const personName& pn) {
         os << pn.lastName << " " << pn.firstName << " " << pn.middleName;
         return os;
     }
 
 private:
-    // Вспомогательная функция для получения первых трех букв строки
     static std::string getFirstThree(const std::string& str) {
         return str.substr(0, std::min(3, static_cast<int>(str.length())));
     }

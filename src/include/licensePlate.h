@@ -46,8 +46,7 @@ struct licensePlate {
         return std::string(1, letter1) + std::to_string(number) + letter2 + letter3;
     }
 
-    // isValidLicensePlate принимает на вход строку в формате A123AA и возвращает True, если переданная строка - корректный
-    // гос номер, иначе - False
+    // isValidLicensePlate takes string like 'A123AA' and returns false if it is invalid license plate or true if valid
     static bool isValidLicensePlate(const std::string& plate) {
         return plate.length() == 6 &&
                std::isalpha(plate[0]) &&
@@ -58,7 +57,7 @@ struct licensePlate {
                std::isalpha(plate[5]);
     }
 
-    // parseLicensePlate принимает на вход строку в формате A123AA и возвращает экземпляр структуры LicensePlate
+    // parseLicensePlate takes string like 'A123AA' and returns an object of licensePlate structure
     static licensePlate parseLicensePlate(const std::string& plate) {
         return { plate[0], std::stoi(plate.substr(1, 3)), plate[4], plate[5]};
     }

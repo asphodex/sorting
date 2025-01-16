@@ -44,18 +44,16 @@ class Generator {
     }
 
 public:
-    // Функция для генерации строки в формате A123AA Gosling Ryan Thompson
+    // generateRandomString generates string like 'A123AA String String String'
     static std::string generateRandomString() {
         std::string result;
 
-        // Генерация первой части строки (A123AA)
         result += generateRandomUppercaseLetter();
         const int number = generateRandomNumber();
         result += std::to_string(number);
         result += generateRandomUppercaseLetter();
         result += generateRandomUppercaseLetter();
 
-        // Генерация ФИО
         result += " " + generateRandomWord();
         result += " " + generateRandomWord();
         result += " " + generateRandomWord();
@@ -63,7 +61,7 @@ public:
         return result;
     }
 
-    // Функция для записи сгенерированных данных в файл
+    // generateAndWriteToFile fill the file with path specified n times using generateRandomString()
     static void generateAndWriteToFile(const std::string &filePath, const int numberOfLines) {
         std::ofstream outFile(filePath);
         if (!outFile) {
@@ -79,7 +77,6 @@ public:
     }
 };
 
-// Инициализация статических членов класса
 std::random_device Generator::rd;
 std::mt19937 Generator::gen(rd());
 
