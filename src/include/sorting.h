@@ -5,14 +5,14 @@
 #ifndef SORTING_H
 #define SORTING_H
 
-#include <cstdio>
+#include <iostream>
 
 template<typename T>
 void printArray(const T* arr, const int size) {
     for (int i = 0; i < size; i++) {
-        printf("%d ", arr[i]);
+        std::cout << arr[i];
     }
-    printf("\n");
+    std::cout << std::endl;
 }
 
 namespace sorting {

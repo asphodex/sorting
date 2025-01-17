@@ -21,15 +21,12 @@ std::string warn(const std::string &err) {
     return "[WARN] " + err;
 }
 
-void readDataFromFile(const std::string &filePath, const int linesToRead, licensePlate *&plates, personName *&names) {
+void readDataFromFile(const std::string &filePath, const int linesToRead, licensePlate *plates, personName *names) {
     std::ifstream inputFile(filePath);
     if (!inputFile.is_open()) {
         std::cerr << error("Can't open the file. Check the file path: ") << filePath << std::endl;
         return;
     }
-
-    plates = new licensePlate[linesToRead]{};
-    names = new personName[linesToRead]{};
 
     std::string line;
     for (int i = 0; i < linesToRead; ++i) {
@@ -182,10 +179,11 @@ int main() {
 
     Generator::generateAndWriteToFile(pathToInputFile, linesToRead);
 
-    auto *plates = new licensePlate[linesToRead]{};
-    auto *names = new personName[linesToRead]{};
+    auto *plates1 = new licensePlate[linesToRead]{}, *plates2 = new licensePlate[linesToRead]{};
+    auto *names1 = new personName[linesToRead]{}, *names2 = new personName[linesToRead]{};
 
-    readDataFromFile(pathToInputFile, linesToRead, plates, names);
+    readDataFromFile(pathToInputFile, linesToRead, plates1, names1);
+    readDataFromFile(pathToInputFile, linesToRead, plates2, names2);
 
     const std::string pathToFile1 = getAbsoluteFilePath("output/shell.txt"), pathToFile2 = getAbsoluteFilePath(
         "output/insertion.txt");
@@ -195,34 +193,36 @@ int main() {
 
     {
         std::chrono::milliseconds sum = {};
-        auto dur = sortAndBench(sorting::shellSort, plates, linesToRead);
+        auto dur = sortAndBench(sorting::shellSort, plates1, linesToRead);
         sum += dur;
         addLineToFile(pathToFile1, "Time to sort for plates: " + std::to_string(dur.count()) + " ms.");
 
-        dur = sortAndBench(sorting::shellSort, names, linesToRead, sorting::Order::DESC);
+        dur = sortAndBench(sorting::shellSort, names1, linesToRead, sorting::Order::DESC);
         sum += dur;
         addLineToFile(pathToFile1, "Time to sort for names: " + std::to_string(dur.count()) + " ms.");
 
         addLineToFile(pathToFile1, "Total time: " + std::to_string(sum.count()) + " ms." + '\n');
 
-        writeToFile(pathToFile1, linesToRead, plates, names);
+        writeToFile(pathToFile1, linesToRead, plates1, names1);
     }
 
     {
         std::chrono::milliseconds sum = {};
-        auto dur = sortAndBench(sorting::insertionSort, plates, linesToRead);
+        auto dur = sortAndBench(sorting::insertionSort, plates2, linesToRead);
         sum += dur;
         addLineToFile(pathToFile2, "Time to sort for plates: " + std::to_string(dur.count()) + " ms.");
 
-        dur = sortAndBench(sorting::insertionSort, names, linesToRead, sorting::Order::DESC);
+        dur = sortAndBench(sorting::insertionSort, names2, linesToRead, sorting::Order::DESC);
         sum += dur;
         addLineToFile(pathToFile2, "Time to sort for names: " + std::to_string(dur.count()) + " ms.");
 
         addLineToFile(pathToFile2, "Total time: " + std::to_string(sum.count()) + " ms." + '\n');
 
-        writeToFile(pathToFile2, linesToRead, plates, names);
+        writeToFile(pathToFile2, linesToRead, plates2, names2);
     }
 
-    delete [] plates;
-    delete [] names;
+    delete [] plates1;
+    delete [] plates2;
+    delete [] names1;
+    delete [] names2;
 }

@@ -16,9 +16,7 @@ struct personName {
 
     int line = 0;
 
-    // Оператор сравнения "<"
     bool operator<(const personName& other) const {
-        // Сравниваем первые три буквы фамилии, имени и отчества
         const std::string thisFirstThree = getFirstThree(lastName) + getFirstThree(firstName) + getFirstThree(middleName);
         const std::string otherFirstThree = getFirstThree(other.lastName) + getFirstThree(other.firstName) + getFirstThree(other.middleName);
 
