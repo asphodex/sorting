@@ -14,8 +14,6 @@ struct personName {
     std::string lastName;   // Фамилия
     std::string middleName; // Отчество
 
-    int line = 0;
-
     bool operator<(const personName& other) const {
         const std::string thisFirstThree = getFirstThree(lastName) + getFirstThree(firstName) + getFirstThree(middleName);
         const std::string otherFirstThree = getFirstThree(other.lastName) + getFirstThree(other.firstName) + getFirstThree(other.middleName);

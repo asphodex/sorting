@@ -5,15 +5,11 @@
 #ifndef LICENSEPLATE_H
 #define LICENSEPLATE_H
 
-#include <iostream>
-
 struct licensePlate {
     char letter1{};
     int number{};
     char letter2{};
     char letter3{};
-
-    int line = 0;
 
     bool operator<(const licensePlate& other) const {
         if (letter1 != other.letter1) return letter1 < other.letter1;

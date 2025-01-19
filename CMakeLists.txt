@@ -10,4 +10,5 @@ add_executable(sorting main.cpp
         src/include/licensePlate.h
         src/include/personName.h
         src/include/generator.h
+        src/include/sortingType.h
 )
