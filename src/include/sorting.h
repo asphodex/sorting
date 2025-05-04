@@ -170,50 +170,6 @@ namespace sorting {
 
             delete[] testArray;
         }
-
-        // isSortStable checks the stability of the sorting. it creates an array and checks the order
-        // of the marked elements. if the marked elements have changed the order, the sorting is unstable,
-        // otherwise it is stable. for a detailed description of the work, you must pass debug = true.
-        inline bool isSortStable(void sort(testStruct *arr, int arraySize, Order),
-                                 const Order order = Order::ASC) {
-            auto fillArray = [](testStruct *array, const int size) {
-                std::random_device rd;
-                std::mt19937 gen(rd());
-                std::uniform_int_distribution dist(0, 2000);
-
-                for (int i = 0; i < size; ++i) {
-                    array[i].key = dist(gen);
-                    if (array[i].key == 500) array[i].key = 12;
-                    array[i].id = i;
-                }
-
-                for (int i = 0; i < 10; ++i) {
-                    array[i].key = 500;
-                }
-            };
-
-            auto testArray = new testStruct[testArraySize]{};
-            fillArray(testArray, testArraySize);
-
-            sort(testArray, testArraySize, order);
-
-            auto isStable = [](const testStruct *array, const int size) {
-                for (int i = 0; i < size; i++) {
-                    if (array[i].key == 500) {
-                        for (int j = i; j < i + 9; j++) {
-                            if (array[j].id > array[j + 1].id) {
-                                return false;
-                            }
-                        }
-                        break;
-                    }
-                }
-                return true;
-            };
-            delete[] testArray;
-
-            return isStable(testArray, testArraySize);
-        }
     }
 }
 
